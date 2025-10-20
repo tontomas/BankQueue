@@ -1,3 +1,5 @@
+ #pragma once
+
 enum StatusCliente {
     VIP = 1,
     PREFERENCIAL = 2,

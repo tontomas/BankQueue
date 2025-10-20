@@ -17,7 +17,7 @@ private:
 
 public:
     Cliente(std::string nombre, std::string apellido, int edad);
-    Cliente::Cliente(std::string nombre, std::string apellido, int edad, StatusCliente prioridadManual);
+    Cliente(std::string nombre, std::string apellido, int edad, StatusCliente prioridadManual);
 
     int getID() const { return id; };
     int getPrioridad() const { return static_cast<int>(prioridad); };

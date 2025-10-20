@@ -61,10 +61,8 @@ void SistemaBancario::gestionarNuevoCliente() {
     if (pManual == 0) {
         listaMaestraClientes.emplace_back(nombre, apellido, edad);
     } else {
-        StatusCliente p;
-        if (pManual == 1) p = VIP;
-        else p = PREFERENCIAL;
-        listaMaestraClientes.emplace_back(nombre, apellido, edad, p);
+        if (pManual == 1) listaMaestraClientes.emplace_back(nombre, apellido, edad, VIP);
+        else listaMaestraClientes.emplace_back(nombre, apellido, int(edad), PREFERENCIAL);
     }
     
     // 2. Obtener un puntero al cliente que acabamos de crear
@@ -138,7 +136,7 @@ void SistemaBancario::gestionarAtencion(Ventanilla* ventanilla) {
                 double monto = Utilidades::leerDouble("Monto a depositar: $");
                 if (cuenta->depositar(monto)) {
                     // Esta 't' solo existe dentro de estas llaves
-                    Transaccion t(DEPOSITO, cuenta->getNumero(), monto);
+                    Transaccion t((TipoTransaccion)DEPOSITO, cuenta->getNumero(), monto);
                     registrarTransaccion(t);
                     Utilidades::mostrarMensaje("Deposito exitoso.");
                 }
@@ -149,7 +147,7 @@ void SistemaBancario::gestionarAtencion(Ventanilla* ventanilla) {
                 double monto = Utilidades::leerDouble("Monto a retirar: $");
                 if (cuenta->retirar(monto)) {
                     // Esta es una 't' completamente nueva
-                    Transaccion t(RETIRO, cuenta->getNumero(), monto);
+                    Transaccion t((TipoTransaccion)RETIRO, cuenta->getNumero(), monto);
                     registrarTransaccion(t);
                     Utilidades::mostrarMensaje("Retiro exitoso.");
                 }
@@ -165,7 +163,7 @@ void SistemaBancario::gestionarAtencion(Ventanilla* ventanilla) {
                     Utilidades::mostrarMensaje("Error: Cuenta destino no encontrada.");
                 } else if (cuenta->transferirA(cDestino, monto)) {
                     // Y esta es la tercera 't', también nueva
-                    Transaccion t(TRANSFERENCIA, cuenta->getNumero(), monto, cDestino->getNumero());
+                    Transaccion t((TipoTransaccion)TRANSFERENCIA, cuenta->getNumero(), monto, cDestino->getNumero());
                     registrarTransaccion(t);
                     Utilidades::mostrarMensaje("Transferencia exitosa.");
                 }

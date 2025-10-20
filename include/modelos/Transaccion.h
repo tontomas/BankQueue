@@ -2,7 +2,7 @@
 
 #include <string>
 #include <ctime>
-#include "Enums.h"
+#include "utils/Enums.h"
 #include "Cuenta.h"
 
 class Transaccion {

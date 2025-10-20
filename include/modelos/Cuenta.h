@@ -2,7 +2,7 @@
 
 #include <string> 
 #include <ctime> 
-#include "Cliente.h"
+#include "utils/Enums.h"
 
 class Cuenta {
 private:

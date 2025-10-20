@@ -1,66 +1,74 @@
 #include "modelos/Cuenta.h" 
+#include <iostream>
 #include <sstream> 
 #include <iomanip>
 
-Cuenta::Cuenta(Cliente* titular, double saldoInicial){
+int Cuenta::contadorCuentas = 0;
 
-    this->titular = titular; 
-    this->saldo = saldoInicial;
-    this->activa = true;
-    this->fechaCreacion = std::time(nullptr);
-    
-    static long long contadorID = 1000000001; 
-    this->numeroCuenta = "CTA-" + std::to_string(contadorID);
-    contadorID++;
+Cuenta::Cuenta(std::string titular, double saldoInicial) 
+    : titular(titular), saldo(saldoInicial), estado(ACTIVA) {
+    this->numeroCuenta = generarNumeroCuenta();
+    this->fechaCreacion = time(nullptr);
+}
 
+std::string Cuenta::generarNumeroCuenta() {
+    std::stringstream ss;
+    ss << std::setfill('0') << std::setw(8) << ++contadorCuentas;
+    return ss.str();
 }
 
 bool Cuenta::depositar(double monto) {
-    if (monto < 0) {
-        return false; 
+    if (monto <= 0) {
+        std::cout << "Error: Monto debe ser positivo" << std::endl;
+        return false;
     }
-
-    if (!this->activa) {
-        return false; 
+    if (!estaActiva()) {
+        std::cout << "Error: Cuenta bloqueada o inactiva" << std::endl;
+        return false;
     }
-
-    this->saldo += monto;
+    saldo += monto;
     return true;
 }
 
-bool Cuenta::tranferir(Cuenta* destino, double monto) {
-    if (monto < 0) {
-        return false; 
+bool Cuenta::retirar(double monto) {
+    if (monto <= 0) {
+        std::cout << "Error: Monto debe ser positivo" << std::endl;
+        return false;
     }
-
-    if (!this->activa || !destino->activa) {
-        return false; 
+    if (!estaActiva()) {
+        std::cout << "Error: Cuenta bloqueada o inactiva" << std::endl;
+        return false;
     }
-
-    if (this->saldo >= monto) {
-        this->saldo -= monto;
-        destino->depositar(monto);
-        return true;
+    if (monto > saldo) {
+        std::cout << "Error: Saldo insuficiente" << std::endl;
+        return false;
     }
+    saldo -= monto;
+    return true;
+}
 
+bool Cuenta::transferirA(Cuenta* destino, double monto) {
+    if (destino == nullptr) return false;
+    if (this->retirar(monto)) {
+        return destino->depositar(monto);
+    }
     return false;
 }
 
-double Cuenta::getSaldo() const {
-    return this->saldo;
-}
-
-Cliente* Cuenta::getTitular() {
-    return this->titular;
-}
-
 std::string Cuenta::toString() const {
-    std::stringstream ss; 
-    
-    ss << "Cuenta Nro: " << this->numeroCuenta << "\n";
-    ss << "Titular:    " << this->titular->getNombreCompleto() << "\n"; 
-    ss << "Saldo:      $" << std::fixed << std::setprecision(2) << this->saldo << "\n";
-    ss << "Estado:     " << (this->activa ? "Activa" : "Desactivada") << "\n";
-
+    std::stringstream ss;
+     ss << "Cuenta: " << numeroCuenta << " | "
+         << "Titular: " << titular << " | "
+         << "Saldo: $" << std::fixed << std::setprecision(2) << saldo;
     return ss.str();
+}
+
+Cuenta& Cuenta::operator+=(double monto) {
+    depositar(monto);
+    return *this;
+}
+
+Cuenta& Cuenta::operator-=(double monto) {
+    retirar(monto);
+    return *this;
 }

@@ -5,7 +5,7 @@
 #include "modelos/Cuenta.h"     // El modelo Cuenta
 #include "modelos/Ventanilla.h" // El modelo Ventanilla
 #include "modelos/Transaccion.h"// El modelo Transaccion
-#include "Enums.h"              // Tus enums (StatusCliente, etc.)
+#include "utils/Enums.h"              // Tus enums (StatusCliente, etc.)
 
 #include <list>
 #include <vector>

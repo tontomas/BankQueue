@@ -19,13 +19,13 @@ public:
     Cliente(std::string nombre, std::string apellido, int edad);
     Cliente(std::string nombre, std::string apellido, int edad, StatusCliente prioridadManual);
 
-    int getID() const { return id; };
-    int getPrioridad() const { return static_cast<int>(prioridad); };
-    std::string getNombreCompleto() const { return nombre + " " + apellido; };
-    std::string getNombre() const { return nombre; };
-    std::string getApellido() const { return apellido; };
-    int getEdad() const { return edad; };
-    time_t getHoraLlegada() const { return horaLlegada; };
+    int getID() const;
+    int getPrioridad() const; 
+    std::string getNombreCompleto() const;
+    std::string getNombre() const;
+    std::string getApellido() const;
+    int getEdad() const;
+    time_t getHoraLlegada() const;
     
     std::string getTipoPrioridadStr() const;
     std::string toString() const;

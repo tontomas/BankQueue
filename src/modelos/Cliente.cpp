@@ -49,6 +49,16 @@ StatusCliente Cliente::calcularPrioridad() {
     return REGULAR;
 }
 
+int Cliente::getPrioridad() const {
+    // Tuvimos que mover esta lógica del .h al .cpp
+    return static_cast<int>(this->prioridad);
+}
+
+time_t Cliente::getHoraLlegada() const {
+    // Tuvimos que mover esta lógica del .h al .cpp
+    return this->horaLlegada;
+}
+
 std::string Cliente::getTipoPrioridadStr() const {
     switch(prioridad) {
         case VIP: return "VIP";

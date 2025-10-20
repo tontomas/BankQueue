@@ -6,9 +6,9 @@ enum StatusCliente {
 };
 
 enum TipoTransaccion {
-    DEPOSITAR,
-    RETIRAR,
-    TRANSACCION,
+    DEPOSITO,
+    RETIRO,
+    TRANSFERENCIA,
     CONSULTA
 };
 

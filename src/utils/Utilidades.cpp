@@ -1,10 +1,9 @@
 #include "utils/Utilidades.h"
 #include <iostream>
-#include <limits>    // Para std::numeric_limits
-#include <iomanip>   // Para std::setw, std::setfill
-#include <sstream>   // Para std::stringstream
+#include <limits>    
+#include <iomanip>   
+#include <sstream>   
 
-// --- Métodos de Consola ---
 
 void Utilidades::limpiarPantalla() {
     #ifdef _WIN32
@@ -16,9 +15,7 @@ void Utilidades::limpiarPantalla() {
 
 void Utilidades::pausarPantalla() {
     std::cout << "\nPresione Enter para continuar...";
-    // Limpia el buffer por si había algo antes
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    // Espera a que el usuario presione Enter
     std::cin.get();
 }
 
@@ -29,18 +26,14 @@ void Utilidades::mostrarMensaje(std::string mensaje) {
     pausarPantalla();
 }
 
-
-// --- Métodos de Lectura Segura (Validación) ---
-
 std::string Utilidades::leerString(std::string prompt) {
     std::string input = "";
     while (true) {
         std::cout << prompt;
-        // getline lee la línea completa, incluyendo espacios
         std::getline(std::cin, input); 
         
         if (!input.empty()) {
-            break; // Éxito, rompe el bucle
+            break; 
         }
         std::cout << "Error: La entrada no puede estar vacia. Intente de nuevo.\n";
     }
@@ -52,16 +45,12 @@ int Utilidades::leerInt(std::string prompt, int min, int max) {
     while (true) {
         std::cout << prompt;
         
-        // Si la entrada NO es un número (ej. "hola") O está fuera de rango
         if (!(std::cin >> input) || input < min || input > max) {
             std::cout << "Error: Debe ingresar un numero entero entre " 
                       << min << " y " << max << ".\n";
-            std::cin.clear(); // Limpia el flag de error de cin
-            // Descarta la línea incorrecta del buffer (ej. "hola\n")
+            std::cin.clear(); 
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         } else {
-            // Éxito, es un número Y está en rango
-            // Limpia el "Enter" que quedó en el buffer
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             break;
         }
@@ -74,13 +63,12 @@ double Utilidades::leerDouble(std::string prompt) {
     while (true) {
         std::cout << prompt;
         
-        // Si NO es un número O es negativo
         if (!(std::cin >> input) || input < 0) {
             std::cout << "Error: Debe ingresar un numero positivo (ej. 150.50).\n";
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         } else {
-            // Éxito
+            
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             break;
         }
@@ -89,11 +77,9 @@ double Utilidades::leerDouble(std::string prompt) {
 }
 
 
-// --- Métodos de Formato ---
 
 std::string Utilidades::formatearFecha(time_t fecha) {
     char bufferFecha[100];
-    // Formato: "Año-Mes-Día Hora:Minuto:Segundo"
     strftime(bufferFecha, sizeof(bufferFecha), "%Y-%m-%d %H:%M:%S", localtime(&fecha));
     return std::string(bufferFecha);
 }
@@ -101,7 +87,7 @@ std::string Utilidades::formatearFecha(time_t fecha) {
 std::vector<std::string> Utilidades::splitString(const std::string& s, char delimiter) {
     std::vector<std::string> tokens;
     std::string token;
-    std::istringstream tokenStream(s); // Usa stringstream para manejar el string como un stream
+    std::istringstream tokenStream(s);
 
     while (std::getline(tokenStream, token, delimiter)) {
         tokens.push_back(token);

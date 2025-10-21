@@ -15,22 +15,21 @@ Cliente::Cliente(std::string nombre, std::string apellido, int edad) {
 }
 
 Cliente::Cliente(std::string nombre, std::string apellido, int edad, StatusCliente prioridadManual) {
-    this->id = ++contadorID; // (O ++contadorClientes, ver nota)
+    this->id = ++contadorID; 
     this->nombre = nombre;
     this->apellido = apellido;
     this->edad = edad;
-    this->horaLlegada = std::time(nullptr); // Hora actual
-    this->prioridad = prioridadManual; // Asigna la prioridad manual
+    this->horaLlegada = std::time(nullptr); 
+    this->prioridad = prioridadManual; 
 }
 
 Cliente::Cliente(std::string nombre, std::string apellido, int edad, StatusCliente prioridadManual, time_t llegada, int idExistente) {
-    this->id = idExistente; // Usa el ID que viene del archivo
+    this->id = idExistente;
     this->nombre = nombre;
     this->apellido = apellido;
     this->edad = edad;
     this->horaLlegada = llegada;
     this->prioridad = prioridadManual;
-    // NO incrementamos contadorClientes aquí, lo hace actualizarContador()
 }
 
 int Cliente::getID() const {
@@ -61,12 +60,10 @@ StatusCliente Cliente::calcularPrioridad() {
 }
 
 int Cliente::getPrioridad() const {
-    // Tuvimos que mover esta lógica del .h al .cpp
     return static_cast<int>(this->prioridad);
 }
 
 time_t Cliente::getHoraLlegada() const {
-    // Tuvimos que mover esta lógica del .h al .cpp
     return this->horaLlegada;
 }
 

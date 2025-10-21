@@ -37,6 +37,6 @@ public:
     
     std::string toString() const;
     
-    Cuenta& operator+=(double monto); // Depósito
-    Cuenta& operator-=(double monto); // Retiro
+    Cuenta& operator+=(double monto);
+    Cuenta& operator-=(double monto);
 };

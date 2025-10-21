@@ -1,5 +1,5 @@
 #include "sistema/Menu.h"
-#include "utils/Utilidades.h" // Usa la caja de herramientas
+#include "utils/Utilidades.h" 
 #include <iostream>
 
 Menu::Menu() {}
@@ -21,7 +21,6 @@ int Menu::mostrarMenuPrincipal() {
     std::cout << "\n0. Salir del sistema\n";
     std::cout << "=================================\n";
     
-    // Llama a Utilidades para leer la opción de forma segura
     return Utilidades::leerInt("Ingrese su opcion: ", 0, 7);
 }
 

@@ -12,13 +12,11 @@ Cuenta::Cuenta(std::string titular, double saldoInicial)
     this->fechaCreacion = time(nullptr);
 }
 
-// --- NUEVO CONSTRUCTOR para cargar desde archivo ---
 Cuenta::Cuenta(std::string titular, double saldoInicial, std::string numExistente, EstadoCuenta estadoExistente) {
     this->numeroCuenta = numExistente;
     this->titular = titular;
     this->saldo = saldoInicial;
     this->estado = estadoExistente;
-    // NO actualizamos contadorCuentas aquí, lo hace actualizarContador()
 }
 
 std::string Cuenta::generarNumeroCuenta() {

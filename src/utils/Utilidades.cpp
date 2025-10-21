@@ -97,3 +97,14 @@ std::string Utilidades::formatearFecha(time_t fecha) {
     strftime(bufferFecha, sizeof(bufferFecha), "%Y-%m-%d %H:%M:%S", localtime(&fecha));
     return std::string(bufferFecha);
 }
+
+std::vector<std::string> Utilidades::splitString(const std::string& s, char delimiter) {
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(s); // Usa stringstream para manejar el string como un stream
+
+    while (std::getline(tokenStream, token, delimiter)) {
+        tokens.push_back(token);
+    }
+    return tokens;
+}

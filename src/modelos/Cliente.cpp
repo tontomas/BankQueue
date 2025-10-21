@@ -3,6 +3,7 @@
 #include <iomanip>
 
 int Cliente::contadorID = 1000;
+int Cliente::contadorClientes = 1000;
 
 Cliente::Cliente(std::string nombre, std::string apellido, int edad) {
     this->nombre = nombre;
@@ -14,12 +15,22 @@ Cliente::Cliente(std::string nombre, std::string apellido, int edad) {
 }
 
 Cliente::Cliente(std::string nombre, std::string apellido, int edad, StatusCliente prioridadManual) {
+    this->id = ++contadorID; // (O ++contadorClientes, ver nota)
     this->nombre = nombre;
     this->apellido = apellido;
     this->edad = edad;
-    this->id = ++contadorID;
+    this->horaLlegada = std::time(nullptr); // Hora actual
+    this->prioridad = prioridadManual; // Asigna la prioridad manual
+}
+
+Cliente::Cliente(std::string nombre, std::string apellido, int edad, StatusCliente prioridadManual, time_t llegada, int idExistente) {
+    this->id = idExistente; // Usa el ID que viene del archivo
+    this->nombre = nombre;
+    this->apellido = apellido;
+    this->edad = edad;
+    this->horaLlegada = llegada;
     this->prioridad = prioridadManual;
-    this->horaLlegada = std::time(nullptr);
+    // NO incrementamos contadorClientes aquí, lo hace actualizarContador()
 }
 
 int Cliente::getID() const {
@@ -75,4 +86,10 @@ std::string Cliente::toString() const {
     ss << this->getNombreCompleto() << " (" << edad << " años) | ";
     ss << "Prioridad: " << getTipoPrioridadStr();
     return ss.str();
+}
+
+void Cliente::actualizarContador(int idMasAlto) {
+    if (idMasAlto > contadorClientes) {
+        contadorClientes = idMasAlto;
+    }
 }

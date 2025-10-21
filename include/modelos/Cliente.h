@@ -6,6 +6,7 @@
 
 class Cliente {
 private: 
+    static int contadorClientes;
     int id;
     static int contadorID;
     std::string nombre; 
@@ -18,6 +19,7 @@ private:
 public:
     Cliente(std::string nombre, std::string apellido, int edad);
     Cliente(std::string nombre, std::string apellido, int edad, StatusCliente prioridadManual);
+    Cliente(std::string nombre, std::string apellido, int edad, StatusCliente prioridadManual, time_t llegada, int idExistente);
 
     int getID() const;
     int getPrioridad() const; 
@@ -26,7 +28,7 @@ public:
     std::string getApellido() const;
     int getEdad() const;
     time_t getHoraLlegada() const;
-    
+    static void actualizarContador(int idMasAlto);
     std::string getTipoPrioridadStr() const;
     std::string toString() const;
 

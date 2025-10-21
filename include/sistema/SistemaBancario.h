@@ -24,7 +24,7 @@ struct ComparadorClientePtr {
         // (Basado en tu Cliente.cpp, asumimos que un número mayor
         // tiene más prioridad, ej. ADULTO_MAYOR > REGULAR)
         if (a->getPrioridad() != b->getPrioridad()) {
-            return a->getPrioridad() < b->getPrioridad(); // El de mayor prioridad sale primero
+            return a->getPrioridad() > b->getPrioridad(); // El de mayor prioridad sale primero
         }
         // Si la prioridad es igual, el que llegó primero sale primero
         return a->getHoraLlegada() > b->getHoraLlegada();
@@ -78,6 +78,16 @@ private:
     Cuenta* buscarCuentaPorNumero(std::string numCuenta);
     Cliente* buscarClientePorID(int id);
 
+    /**
+     * @brief Carga todos los datos (clientes, cuentas) desde archivos de texto.
+     */
+    void cargarDatos();
+
+    /**
+     * @brief Guarda todos los datos (clientes, cuentas, transacciones) en archivos de texto.
+     * @note Se llama al final del programa.
+     */
+    void guardarDatos() const;
 
 public:
     SistemaBancario(int numVentanillas);

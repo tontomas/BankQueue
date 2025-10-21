@@ -1,14 +1,24 @@
 #include "modelos/Cuenta.h" 
+#include "modelos/Transaccion.h"
 #include <iostream>
 #include <sstream> 
 #include <iomanip>
 
-int Cuenta::contadorCuentas = 0;
+int Cuenta::contadorCuentas = 100000;
 
 Cuenta::Cuenta(std::string titular, double saldoInicial) 
     : titular(titular), saldo(saldoInicial), estado(ACTIVA) {
     this->numeroCuenta = generarNumeroCuenta();
     this->fechaCreacion = time(nullptr);
+}
+
+// --- NUEVO CONSTRUCTOR para cargar desde archivo ---
+Cuenta::Cuenta(std::string titular, double saldoInicial, std::string numExistente, EstadoCuenta estadoExistente) {
+    this->numeroCuenta = numExistente;
+    this->titular = titular;
+    this->saldo = saldoInicial;
+    this->estado = estadoExistente;
+    // NO actualizamos contadorCuentas aquí, lo hace actualizarContador()
 }
 
 std::string Cuenta::generarNumeroCuenta() {
@@ -71,4 +81,10 @@ Cuenta& Cuenta::operator+=(double monto) {
 Cuenta& Cuenta::operator-=(double monto) {
     retirar(monto);
     return *this;
+}
+
+void Cuenta::actualizarContador(int numMasAlto) {
+    if (numMasAlto > contadorCuentas) {
+        contadorCuentas = numMasAlto;
+    }
 }

@@ -2,6 +2,7 @@
 
 #include <string>
 #include <ctime>
+#include <vector>
 
 /**
  * @brief Clase de utilidad estática.
@@ -58,4 +59,7 @@ public:
      * @return Un string (ej. "2025-10-20 09:30:00")
      */
     static std::string formatearFecha(time_t fecha);
+
+    static std::vector<std::string> splitString(const std::string& s, char delimiter);
+
 };
